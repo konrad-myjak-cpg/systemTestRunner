@@ -9,6 +9,8 @@ class TestResults(Resource):
 
         parser.add_argument("testName", type=str, required=True)
         parser.add_argument("testResult", type=str, required=True)
+        parser.add_argument("duration", type=str, required=True)
+        parser.add_argument("output", type=str, required=True)
 
         args = parser.parse_args()
 
@@ -17,7 +19,9 @@ class TestResults(Resource):
         data = data.append({
             'id': len(data)+1,
             'testName': args['testName'],
-            'testResult': args['testResult']
+            'testResult': args['testResult'],
+            'duration': args['duration'],
+            'output': args['output']
         }, ignore_index=True)
         data.to_csv(testResultsPath, index=False)
         return {'data': data.to_dict()}, 200
